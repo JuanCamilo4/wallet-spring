@@ -1,5 +1,6 @@
 package com.siscode.wallet.app.infraestructure;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mongodb.lang.Nullable;
 import lombok.NonNull;
 import org.bson.types.ObjectId;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.math.BigDecimal;
 
 @Document("account")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountEntity {
 
     @Id

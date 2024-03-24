@@ -3,9 +3,11 @@ package com.siscode.wallet.app.adapter;
 import com.siscode.wallet.app.application.AccountApplication;
 import com.siscode.wallet.app.application.mapper.AccountMapper;
 import com.siscode.wallet.app.domain.AccountDomain;
+import com.siscode.wallet.app.domain.AccountHistoryDomain;
 import com.siscode.wallet.app.infraestructure.AccountEntity;
 import com.siscode.wallet.app.utils.BusinessException;
-import com.siscode.wallet.app.utils.Constants;
+import com.siscode.wallet.app.utils.ConstantsErrors;
+import com.siscode.wallet.app.utils.ConstantsParams;
 import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +43,8 @@ public class AccountRestController {
     @GetMapping("/account-used/{filter}")
     public ResponseEntity<List<String>> accountUsed(@PathVariable String filter) {
         log.debug(String.format("FILTER: %s", filter));
-        if (!filter.equals(Constants.MONTH_ACCOUNT_FILTER.getValue()) && !filter.equals(Constants.DATE_ACCOUNT_FILTER.getValue())) {
-            throw new BusinessException(Constants.ERROR_FILTER_ACCOUNT_USED.getValue());
+        if (!filter.equals(ConstantsParams.MONTH_ACCOUNT_FILTER.getValue()) && !filter.equals(ConstantsParams.DATE_ACCOUNT_FILTER.getValue())) {
+            throw new BusinessException(ConstantsErrors.ERROR_FILTER_ACCOUNT_USED.getValue());
         }
         return ResponseEntity.ok(accountApplication.getAccountUsed(filter));
     }
@@ -62,6 +64,11 @@ public class AccountRestController {
     public ResponseEntity deleteAccount(@PathVariable String id) {
         accountApplication.deleteAccount(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
+    @GetMapping("/list-account-history")
+    private ResponseEntity<List<AccountHistoryDomain>> listAccountHistory(@RequestParam int limit) {
+        return ResponseEntity.status(HttpStatus.OK).body(accountApplication.getAccountHistory(limit));
     }
 
 }

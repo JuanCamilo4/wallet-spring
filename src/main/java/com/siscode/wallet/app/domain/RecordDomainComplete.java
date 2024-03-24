@@ -1,50 +1,52 @@
-package com.siscode.wallet.app.infraestructure;
+package com.siscode.wallet.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mongodb.lang.Nullable;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Document("record")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RecordEntity implements Serializable {
+public class RecordDomainComplete implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Field("_id")
-    private ObjectId id;
-    private ObjectId account;
+    private String id;
+    private AccountDomain account;
     private BigDecimal amount;
     private String date;
     private String time;
-    private ObjectId category;
+    private String category;
     private String type;
     private String paymentType;
     private String place;
     private String note;
     private String createdAt;
     private String updatedAt;
+    private Boolean fourmil;
 
-    public ObjectId getId() {
+    public Boolean getFourmil() {
+        return fourmil;
+    }
+
+    public void setFourmil(Boolean fourmil) {
+        this.fourmil = fourmil;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public ObjectId getAccount() {
+    public AccountDomain getAccount() {
         return account;
     }
 
-    public void setAccount(ObjectId account) {
+    public void setAccount(AccountDomain account) {
         this.account = account;
     }
 
@@ -72,11 +74,11 @@ public class RecordEntity implements Serializable {
         this.time = time;
     }
 
-    public ObjectId getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(ObjectId category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
